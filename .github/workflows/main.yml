@@ -1,4 +1,4 @@
-name: DevOps CI Pipeline
+name: DevOps CI/CD Pipeline
 
 on:
   push:
@@ -6,12 +6,23 @@ on:
       - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: docker build -t project1a .
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd devops-practice
+            git pull
+            docker stop my-container || true
+            docker rm my-container || true
+            docker build -t project1a .
+            docker run -d -p 80:80 --name my-container project1a
