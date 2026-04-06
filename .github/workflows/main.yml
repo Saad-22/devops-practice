@@ -22,5 +22,5 @@ jobs:
           script: |
             cd devops-practice
             git pull origin master
-            docker compose down
-            docker compose up -d --build
+            docker-compose down
+            docker-compose up -d --build
