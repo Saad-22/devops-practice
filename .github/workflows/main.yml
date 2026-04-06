@@ -21,8 +21,6 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd devops-practice
-            git pull
-            docker stop my-container || true
-            docker rm my-container || true
-            docker build -t project1a .
-            docker run -d -p 80:80 --name my-container project1a
+            git pull origin master
+            docker compose down
+            docker compose up -d --build
