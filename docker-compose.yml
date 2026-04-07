@@ -3,11 +3,16 @@ version: '3'
 services:
   frontend:
     build: ./frontend
+    container_name: frontend
     ports:
       - "80:80"
     depends_on:
       - backend
+    restart: always
 
   backend:
     build: ./backend
-
+    container_name: backend
+    env_file:
+      - .env
+    restart: always
