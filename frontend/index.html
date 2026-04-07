@@ -52,7 +52,7 @@
 
 <script>
 function getData() {
-    fetch("http://51.21.1.114:3000/api")
+    fetch("/api")
     .then(res => res.json())
     .then(data => {
         document.getElementById("status").innerText = data.message;
